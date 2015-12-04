@@ -38,12 +38,21 @@
       return rv
     }
 
+    function query(q) {
+      return {
+        query_string: {
+          default_field: 'text',
+          query: q,
+        },
+      }
+    }
+
     function search(q, callback) {
       $.ajax({
         url: '/search',
         method: 'POST',
         data: JSON.stringify({
-          query: {query_string: {default_field: 'text', query: q}},
+          query: query(q),
           fields: ['title', 'url'],
           highlight: {fields: {text: {}}},
         }),
