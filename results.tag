@@ -3,7 +3,7 @@
   <ul id="results" if={opts.hits.length > 0}>
     <li each={opts.hits}>
 
-      <h3><a href={url}>{title}</a></h3>
+      <h3><a href={fields.url}>{fields.title}</a></h3>
 
       <ul>
         <li each={hi in highlight.text} class="highlight">
