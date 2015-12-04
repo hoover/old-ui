@@ -1,4 +1,33 @@
-.highlight em {
+#results, .results-highlight {
+  padding: 0;
+  list-style: none;
+}
+
+.results-item {
+  margin-bottom: 5px;
+}
+
+.results-item > a {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+}
+
+.results-item > a:hover {
+  background: #eee;
+}
+
+.results-item h3 {
+  font-size: 14px;
+  margin: 0;
+  color: #0275d8;
+}
+
+.results-highlight {
+  font-size: 12px;
+}
+
+.results-highlight em {
   font-style: normal;
   font-weight: bold;
 }

@@ -1,16 +1,18 @@
 <results>
 
   <ul id="results" if={opts.hits.length > 0}>
-    <li each={opts.hits}>
+    <li each={opts.hits} class="results-item">
+      <a href="#">
 
-      <h3><a href={fields.url}>{fields.title}</a></h3>
+        <h3>{fields.title}</h3>
 
-      <ul>
-        <li each={hi in highlight.text} class="highlight">
-          <raw-span content={hi}></raw-span>
-        </li>
-      </ul>
+        <ul class="results-highlight">
+          <li each={hi in highlight.text}>
+            <raw-span content={hi}></raw-span>
+          </li>
+        </ul>
 
+      </a>
     </li>
   </ul>
 
