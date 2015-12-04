@@ -13,11 +13,21 @@
       </div>
     </form>
 
-    <div>
+    <div class="row">
 
-      <results if={hits} hits={hits}></results>
+      <div class="col-sm-3">
+        <results if={hits} hits={hits} onselect={onselect}></results>
+        <p if={searching}>searching ...</p>
+      </div>
 
-      <p if={searching}>searching ...</p>
+      <div class="col-sm-9">
+        <div if={selected}>
+          <p if={!preview}>loading ...</p>
+          <div if={preview}>
+            <raw-span content={preview.highlight.text[0]}></raw-span>
+          </div>
+        </div>
+      </div>
 
     </div>
 
@@ -60,6 +70,22 @@
       })
     }
 
+    function preview(id, q, callback) {
+      $.ajax({
+        url: '/search',
+        method: 'POST',
+        data: JSON.stringify({
+          query: {ids: {values: [id]}},
+          fields: [],
+          highlight: {fields: {text: {
+            number_of_fragments: 0,
+            highlight_query: query(q),
+          }}},
+        }),
+        success: callback,
+      })
+    }
+
     var qArg = parseQuery(window.location.href).q
     this.q = qArg ? ''+qArg : ''
 
@@ -71,6 +97,19 @@
       search(this.q, function(resp) {
         this.searching = false
         this.hits = resp.hits.hits
+        this.update()
+      }.bind(this))
+
+    }
+
+    onselect(id) {
+
+      this.selected = id
+      this.preview = null
+      this.update()
+
+      preview(id, this.q, function(resp) {
+        this.preview = resp.hits.hits[0]
         this.update()
       }.bind(this))
 
