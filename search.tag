@@ -42,7 +42,11 @@
       $.ajax({
         url: '/search',
         method: 'POST',
-        data: {q: q},
+        data: JSON.stringify({
+          query: {query_string: {default_field: 'text', query: q}},
+          fields: ['title', 'url'],
+          highlight: {fields: {text: {}}},
+        }),
         success: callback,
       })
     }
