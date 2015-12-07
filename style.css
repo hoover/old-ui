@@ -3,10 +3,6 @@
   list-style: none;
 }
 
-results nav .pager {
-  text-align: inherit;
-}
-
 .results-item {
   margin-bottom: 5px;
 }
