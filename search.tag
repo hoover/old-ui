@@ -24,7 +24,7 @@
         <div if={selected}>
           <p if={!preview}>loading ...</p>
           <div if={preview}>
-            <preview content={preview.highlight.text[0]}></preview>
+            <preview doc={preview}></preview>
           </div>
         </div>
       </div>
@@ -76,7 +76,7 @@
         method: 'POST',
         data: JSON.stringify({
           query: {ids: {values: [id]}},
-          fields: [],
+          fields: ['title', 'url', 'collection'],
           highlight: {fields: {text: {
             number_of_fragments: 0,
             highlight_query: query(q),
@@ -109,7 +109,13 @@
       this.update()
 
       preview(id, this.q, function(resp) {
-        this.preview = resp.hits.hits[0]
+        var hit = resp.hits.hits[0]
+        this.preview = {
+          text: hit.highlight.text[0],
+          title: ""+hit.fields.title,
+          url: ""+hit.fields.url,
+          collection: ""+hit.fields.collection,
+        }
         this.update()
       }.bind(this))
 
