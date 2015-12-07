@@ -15,12 +15,12 @@
 
     <div class="row">
 
-      <div class="col-sm-3">
+      <div class="col-sm-4">
         <results if={hits} hits={hits} onselect={onselect}></results>
         <p if={searching}>searching ...</p>
       </div>
 
-      <div class="col-sm-9">
+      <div class="col-sm-8">
         <div if={selected}>
           <p if={!preview}>loading ...</p>
           <div if={preview} class="preview">
@@ -64,7 +64,7 @@
         data: JSON.stringify({
           query: query(q),
           fields: ['title', 'url'],
-          highlight: {fields: {text: {}}},
+          highlight: {fields: {text: {fragment_size: 40, number_of_fragments: 3}}},
         }),
         success: callback,
       })
