@@ -23,8 +23,8 @@
       <div class="col-sm-8">
         <div if={selected}>
           <p if={!preview}>loading ...</p>
-          <div if={preview} class="preview">
-            <raw-span content={preview.highlight.text[0]}></raw-span>
+          <div if={preview}>
+            <preview content={preview.highlight.text[0]}></preview>
           </div>
         </div>
       </div>
