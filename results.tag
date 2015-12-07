@@ -1,7 +1,15 @@
 <results>
 
-  <ul id="results" if={opts.results.hits.length > 0}>
-    <li each={opts.results.hits} class="results-item">
+  <nav if={opts.hits.length > 0}>
+    <ul class="pager">
+      <li><a href="#">Previous</a></li>
+      <li>{opts.total} (page {opts.page}/{opts.page_count})</li>
+      <li><a href="#">Next</a></li>
+    </ul>
+  </nav>
+
+  <ul id="results" if={opts.hits.length > 0}>
+    <li each={opts.hits} class="results-item">
       <a href="#" onclick={select}>
 
         <h3>{fields.title}</h3>
@@ -16,7 +24,7 @@
     </li>
   </ul>
 
-  <p if={opts.results.hits.length == 0}>
+  <p if={opts.hits.length == 0}>
     -- no results --
   </p>
 

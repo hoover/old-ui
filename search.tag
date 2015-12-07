@@ -16,7 +16,14 @@
     <div class="row">
 
       <div class="col-sm-4">
-        <results if={results} results={results} onselect={onselect}></results>
+        <results
+          if={results}
+          hits={results.hits}
+          total={results.total}
+          page={results.page}
+          page_count={results.page_count}
+          onselect={onselect}
+          ></results>
         <p if={searching}>searching ...</p>
       </div>
 
@@ -96,7 +103,12 @@
 
       search(this.q, function(resp) {
         this.searching = false
-        this.results = resp.hits
+        this.results = {
+          hits: resp.hits.hits,
+          total: resp.hits.total,
+          page: 1,
+          page_count: Math.ceil(resp.hits.total / 10),
+        }
         this.update()
       }.bind(this))
 
