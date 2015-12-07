@@ -32,6 +32,10 @@
   font-weight: bold;
 }
 
+.preview-content {
+  white-space: pre-wrap;
+}
+
 .preview-content em {
   font-style: normal;
   font-weight: bold;
