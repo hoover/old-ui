@@ -16,7 +16,7 @@
     <div class="row">
 
       <div class="col-sm-4">
-        <results if={hits} hits={hits} onselect={onselect}></results>
+        <results if={results} results={results} onselect={onselect}></results>
         <p if={searching}>searching ...</p>
       </div>
 
@@ -96,7 +96,7 @@
 
       search(this.q, function(resp) {
         this.searching = false
-        this.hits = resp.hits.hits
+        this.results = resp.hits
         this.update()
       }.bind(this))
 

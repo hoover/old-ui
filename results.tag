@@ -1,7 +1,7 @@
 <results>
 
-  <ul id="results" if={opts.hits.length > 0}>
-    <li each={opts.hits} class="results-item">
+  <ul id="results" if={opts.results.hits.length > 0}>
+    <li each={opts.results.hits} class="results-item">
       <a href="#" onclick={select}>
 
         <h3>{fields.title}</h3>
@@ -16,7 +16,7 @@
     </li>
   </ul>
 
-  <p if={opts.hits.length == 0}>
+  <p if={opts.results.hits.length == 0}>
     -- no results --
   </p>
 
