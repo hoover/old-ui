@@ -31,3 +31,9 @@
   font-style: normal;
   font-weight: bold;
 }
+
+.preview em {
+  font-style: normal;
+  font-weight: bold;
+  background: #ddd;
+}
