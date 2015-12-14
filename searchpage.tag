@@ -53,17 +53,10 @@
     <div class="row">
 
       <div class="col-sm-4">
-        <results
-          if={results}
-          hits={results.hits}
-          total={results.total}
-          page={results.page}
-          page_count={results.page_count}
-          onselect={onselect}
-          prev_url={results.prev_url}
-          next_url={results.next_url}
-          ></results>
-        <p if={searching}>searching ...</p>
+        <search
+          query={query}
+          onselect={onselect.bind(this)}
+          ></search>
       </div>
 
       <div class="col-sm-8">
@@ -123,30 +116,6 @@
       return rv
     }
 
-    function query(q) {
-      return {
-        query_string: {
-          default_field: 'text',
-          query: q,
-        },
-      }
-    }
-
-    function search(q, collections, page, size, callback) {
-      $.ajax({
-        url: '/search',
-        method: 'POST',
-        data: JSON.stringify({
-          from: (page - 1) * size,
-          size: size,
-          query: query(q),
-          collections: collections,
-          fields: ['title', 'url'],
-          highlight: {fields: {text: {fragment_size: 40, number_of_fragments: 3}}},
-        }),
-        success: callback,
-      })
-    }
 
     function preview(id, q, callback) {
       $.ajax({
@@ -157,7 +126,12 @@
           fields: ['title', 'url', 'collection'],
           highlight: {fields: {text: {
             number_of_fragments: 0,
-            highlight_query: query(q),
+            highlight_query: {
+              query_string: {
+                default_field: 'text',
+                query: q,
+              },
+            }
           }}},
         }),
         success: callback,
@@ -186,30 +160,12 @@
       }
 
       if(this.q) {
-
-        this.searching = true
-        page = args.p ? +args.p : 1
-        search(this.q, this.selectedCollections, page, this.size, function(resp) {
-          this.searching = false
-          var url = function(p) {
-            var u = "?q=" + encodeURIComponent(this.q)
-            if(p > 1) u += "&p=" + p
-            return u
-          }.bind(this)
-          page_count = Math.ceil(resp.hits.total / this.size)
-          var prev_url = page > 1 ? url(page - 1) : null
-          var next_url = page < page_count ? url(page + 1) : null
-          this.results = {
-            hits: resp.hits.hits,
-            total: resp.hits.total,
-            page: page,
-            page_count: page_count,
-            prev_url: prev_url,
-            next_url: next_url,
-          }
-          this.update()
-        }.bind(this))
-
+        this.query = {
+          q: this.q,
+          collections: this.selectedCollections,
+          page: args.p ? +args.p : 1,
+          size: this.size,
+        }
       }
 
       this.update()
