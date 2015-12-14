@@ -1,4 +1,4 @@
-<search>
+<searchpage>
 
   <div class="container">
 
@@ -237,4 +237,4 @@
     }
 
   </script>
-</search>
+</searchpage>
