@@ -120,7 +120,7 @@
       }
     }
 
-    function search(q, page, size, callback) {
+    function search(q, collections, page, size, callback) {
       $.ajax({
         url: '/search',
         method: 'POST',
@@ -128,6 +128,7 @@
           from: (page - 1) * size,
           size: size,
           query: query(q),
+          collections: collections,
           fields: ['title', 'url'],
           highlight: {fields: {text: {fragment_size: 40, number_of_fragments: 3}}},
         }),
@@ -159,6 +160,7 @@
     this.q = args.q ? "" + args.q : ""
 
     getCollections(function(resp) {
+
       this.collections = resp
       if(args.collections) {
         var sel = ''+args.collections
@@ -167,38 +169,39 @@
       else {
         this.selectedCollections = resp.map(function(c) { return c.slug })
       }
+
+      if(this.q) {
+
+        this.searching = true
+        page = args.p ? +args.p : 1
+        size = 10
+        search(this.q, this.selectedCollections, page, size, function(resp) {
+          this.searching = false
+          var url = function(p) {
+            var u = "?q=" + encodeURIComponent(this.q)
+            if(p > 1) u += "&p=" + p
+            return u
+          }.bind(this)
+          page_count = Math.ceil(resp.hits.total / size)
+          var prev_url = page > 1 ? url(page - 1) : null
+          var next_url = page < page_count ? url(page + 1) : null
+          this.results = {
+            hits: resp.hits.hits,
+            total: resp.hits.total,
+            page: page,
+            page_count: page_count,
+            prev_url: prev_url,
+            next_url: next_url,
+          }
+          this.update()
+        }.bind(this))
+
+      }
+
       this.update()
+      saveCollections()
+
     }.bind(this))
-
-    if(this.q) {
-
-      this.searching = true
-      this.update()
-
-      page = args.p ? +args.p : 1
-      size = 10
-      search(this.q, page, size, function(resp) {
-        this.searching = false
-        var url = function(p) {
-          var u = "?q=" + encodeURIComponent(this.q)
-          if(p > 1) u += "&p=" + p
-          return u
-        }.bind(this)
-        page_count = Math.ceil(resp.hits.total / size)
-        var prev_url = page > 1 ? url(page - 1) : null
-        var next_url = page < page_count ? url(page + 1) : null
-        this.results = {
-          hits: resp.hits.hits,
-          total: resp.hits.total,
-          page: page,
-          page_count: page_count,
-          prev_url: prev_url,
-          next_url: next_url,
-        }
-        this.update()
-      }.bind(this))
-
-    }
 
     onselect(id) {
 
