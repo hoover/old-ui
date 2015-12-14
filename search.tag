@@ -12,6 +12,18 @@
 
           <button type="submit" class="btn btn-primary">search</button>
 
+          <div>
+            <label for="search-size">
+              Results per page
+            </label>
+            <select class="form-control" id="search-size" name="size">
+              <option
+                each={size in sizeOptions}
+                selected={size==this.parent.size}
+                >{size}</option>
+            </select>
+          </div>
+
         </div>
       </div>
 
@@ -159,6 +171,9 @@
     var args = parseQuery(window.location.href)
     this.q = args.q ? "" + args.q : ""
 
+    this.sizeOptions = [10, 50, 200, 1000]
+    this.size = args.size ? +args.size : 10
+
     getCollections(function(resp) {
 
       this.collections = resp
@@ -174,15 +189,14 @@
 
         this.searching = true
         page = args.p ? +args.p : 1
-        size = 10
-        search(this.q, this.selectedCollections, page, size, function(resp) {
+        search(this.q, this.selectedCollections, page, this.size, function(resp) {
           this.searching = false
           var url = function(p) {
             var u = "?q=" + encodeURIComponent(this.q)
             if(p > 1) u += "&p=" + p
             return u
           }.bind(this)
-          page_count = Math.ceil(resp.hits.total / size)
+          page_count = Math.ceil(resp.hits.total / this.size)
           var prev_url = page > 1 ? url(page - 1) : null
           var next_url = page < page_count ? url(page + 1) : null
           this.results = {
