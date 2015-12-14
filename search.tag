@@ -2,15 +2,40 @@
 
   <div class="container">
 
-    <form class="form-inline">
-      <div class="form-group">
+    <form class="row">
 
-        <input name="q" value={q} class="form-control"
-          placeholder="query ...">
+      <div class="form-inline col-sm-6">
+        <div class="form-group">
 
-        <button type="submit" class="btn btn-primary">search</button>
+          <input name="q" value={q} class="form-control"
+            placeholder="query ...">
+
+          <button type="submit" class="btn btn-primary">search</button>
+
+        </div>
+      </div>
+
+      <div id="collections-box" class="col-sm-6">
+
+        <h2>Collections</h2>
+
+        <p if={!collections}>loading collections ...</p>
+
+        <div each={collections} class="checkbox">
+          <label>
+            <input type="checkbox" value="{slug}"
+              checked={selectedCollections.indexOf(slug) > -1}
+              onchange={onSelectCollection}>
+            {title}
+          </label>
+        </div>
+
+        <em if={!collections.length}>none available</em>
+
+        <input id="collections-input" type="hidden">
 
       </div>
+
     </form>
 
     <div class="row">
@@ -43,6 +68,35 @@
   </div>
 
   <script>
+
+    function getCollections(callback) {
+      $.ajax({
+        url: '/collections',
+        success: callback,
+      })
+    }
+
+    function saveCollections() {
+      var checkboxes = $('#collections-box input[type=checkbox]')
+      var collectionsInput = $('#collections-input')
+      if(checkboxes.filter(':not(:checked)').length > 0) {
+
+        var selected = ''+(
+          checkboxes
+          .filter(':checked')
+          .get()
+          .map(function(c) { return c.value })
+          .join(' ')
+        )
+        collectionsInput.attr('name', 'collections').val(selected)
+
+      }
+      else {
+
+        collectionsInput.attr('name', null).val('')
+
+      }
+    }
 
     function parseQuery(url) {
       var rv = {}
@@ -97,8 +151,24 @@
       })
     }
 
+    onSelectCollection(evt) {
+      saveCollections()
+    }
+
     var args = parseQuery(window.location.href)
     this.q = args.q ? "" + args.q : ""
+
+    getCollections(function(resp) {
+      this.collections = resp
+      if(args.collections) {
+        var sel = ''+args.collections
+        this.selectedCollections = sel ? sel.split('+') : []
+      }
+      else {
+        this.selectedCollections = resp.map(function(c) { return c.slug })
+      }
+      this.update()
+    }.bind(this))
 
     if(this.q) {
 
