@@ -24,6 +24,10 @@
             </select>
           </div>
 
+          <p>
+            <a href="/batch.html">batch search</a>
+          </p>
+
         </div>
       </div>
 
