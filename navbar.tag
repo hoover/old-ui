@@ -1,6 +1,9 @@
 <navbar>
 
-  <div if={me.username} class="btn-group" role="group">
+  <a href="https://github.com/mgax/hoover" class="btn btn-secondary">about</a>
+  <a href="/terms.html" class="btn btn-secondary">terms</a>
+
+  <span if={me.username} class="btn-group" role="group">
     <button id="loggedin-btngroup" type="button"
             class="btn btn-secondary dropdown-toggle"
             data-toggle="dropdown"
@@ -15,12 +18,12 @@
          href={me.urls.logout}
          >logout</a>
     </div>
-  </div>
+  </span>
 
 
-  <div if={!me.username}>
+  <span if={!me.username}>
     <a href={me.urls.login} class="btn btn-primary-outline">login</a>
-  </div>
+  </span>
 
   <script>
 
