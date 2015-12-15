@@ -8,7 +8,7 @@
 
         <div class="form-group">
           <textarea
-            placeholder="terms ..."
+            placeholder="search terms, one per line ..."
             class="form-control"
             name="terms"
             >{termsArg}</textarea>
