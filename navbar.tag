@@ -15,6 +15,9 @@
          href={me.urls.admin}
          >admin</a>
       <a class="dropdown-item"
+         href={me.urls.password_change}
+         >change password</a>
+      <a class="dropdown-item"
          href={me.urls.logout}
          >logout</a>
     </div>
