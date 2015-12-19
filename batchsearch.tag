@@ -149,7 +149,7 @@
         this.selectedCollections = resp.map(function(c) { return c.slug })
       }
 
-      this.termsArg = args.terms ? "" + args.terms : ""
+      this.termsArg = args.terms ? ("" + args.terms).replace(/\+/g, ' ') : ""
       if(this.termsArg) {
         this.queries = this.termsArg.split('\n')
           .map(function(line) { return line.trim() })

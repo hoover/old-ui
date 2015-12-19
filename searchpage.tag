@@ -147,7 +147,7 @@
     }
 
     var args = parseQuery(window.location.href)
-    this.q = args.q ? "" + args.q : ""
+    this.q = args.q ? ("" + args.q).replace(/\+/g, ' ') : ""
 
     this.sizeOptions = [10, 50, 200, 1000]
     this.size = args.size ? +args.size : 10
