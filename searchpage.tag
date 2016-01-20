@@ -1,6 +1,6 @@
 <searchpage>
 
-  <div class="container">
+  <form class="container">
 
     <div class="row">
 
@@ -81,14 +81,7 @@
 
     </div>
 
-    <form class="row">
-
-      <div class="form-inline col-sm-6">
-      </div>
-
-    </form>
-
-  </div>
+  </form>
 
   <script>
 
