@@ -3,14 +3,11 @@
   list-style: none;
 }
 
-.results-item {
-  margin-bottom: 5px;
-}
-
 .results-item > a {
   color: inherit;
   text-decoration: none;
   display: block;
+  font-size: 14px;
 }
 
 .results-item > a:hover {
@@ -18,13 +15,14 @@
 }
 
 .results-item h3 {
-  font-size: 14px;
+  font-size: inherit;
   margin: 0;
   color: #0275d8;
+  display: inline;
 }
 
-.results-highlight {
-  font-size: 10px;
+.results-highlight, .results-highlight > li {
+  display: inline;
 }
 
 .results-highlight em {

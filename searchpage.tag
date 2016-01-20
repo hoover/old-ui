@@ -2,20 +2,23 @@
 
   <div class="container">
 
-    <form class="row">
+    <div class="row">
 
-      <div class="form-inline col-sm-6">
+      <div class="col-sm-3">
+        <h1>Hoover</h1>
+      </div>
+
+      <div class="col-sm-8">
+
         <div class="form-group">
-
           <input name="q" value={q} class="form-control"
             placeholder="query ...">
+        </div>
 
-          <button type="submit" class="btn btn-primary">search</button>
+        <div class="form-inline">
 
-          <div>
-            <label for="search-size">
-              Results per page
-            </label>
+          <div class="form-group">
+            <label for="search-size">Results per page</label>
             <select class="form-control" id="search-size" name="size">
               <option
                 each={size in sizeOptions}
@@ -24,16 +27,24 @@
             </select>
           </div>
 
-          <p>
+          <button type="submit" class="btn btn-primary btn-sm">search</button>
+
+          <p class="pull-sm-right">
             <a href="/batch.html">batch search</a>
           </p>
 
         </div>
+
       </div>
 
-      <div id="collections-box" class="col-sm-6">
+      <div class="col-sm-1">
+      </div>
 
-        <h2>Collections</h2>
+    </div>
+
+    <div class="row">
+
+      <div id="collections-box" class="col-sm-3">
 
         <p if={!collections}>loading collections ...</p>
 
@@ -52,27 +63,30 @@
 
       </div>
 
-    </form>
+      <div class="col-sm-9">
 
-    <div class="row">
-
-      <div class="col-sm-4">
         <search
           query={query}
           onselect={onselect.bind(this)}
           ></search>
-      </div>
 
-      <div class="col-sm-8">
         <div if={selected}>
           <p if={!preview}>loading ...</p>
           <div if={preview}>
             <preview doc={preview}></preview>
           </div>
         </div>
+
       </div>
 
     </div>
+
+    <form class="row">
+
+      <div class="form-inline col-sm-6">
+      </div>
+
+    </form>
 
   </div>
 
