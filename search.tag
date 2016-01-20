@@ -13,6 +13,8 @@
 
   <p if={searching}>searching ...</p>
 
+  <p if={error} class="alert alert-danger">{error}</p>
+
   <script>
 
     function buildQuery(q) {
@@ -24,7 +26,7 @@
       }
     }
 
-    function search(query, callback) {
+    function search(query, success, error) {
       $.ajax({
         url: '/search',
         method: 'POST',
@@ -36,7 +38,8 @@
           fields: ['title', 'url'],
           highlight: {fields: {text: {fragment_size: 40, number_of_fragments: 3}}},
         }),
-        success: callback,
+        success: success,
+        error: error,
       })
     }
 
@@ -64,6 +67,13 @@
           prev_url: prev_url,
           next_url: next_url,
         }
+        this.error = null
+        this.update()
+      }.bind(this), function(err) {
+        console.log(err.responseText)
+        this.searching = false
+        this.results = null
+        this.error = "Server error while searching"
         this.update()
       }.bind(this))
     }
