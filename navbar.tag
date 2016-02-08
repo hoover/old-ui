@@ -10,7 +10,7 @@
             aria-haspopup="true" aria-expanded="false">
       {me.username}
     </button>
-    <div class="dropdown-menu" aria-labelledby="loggedin-btngroup">
+    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="loggedin-btngroup">
       <a if={me.admin} class="dropdown-item"
          href={me.urls.admin}
          >admin</a>

@@ -1,6 +1,6 @@
 <searchpage>
 
-  <form class="container">
+  <form>
 
     <div class="row">
 
