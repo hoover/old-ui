@@ -26,8 +26,8 @@
 
         <div each={collections} class="checkbox">
           <label>
-            <input type="checkbox" value="{slug}"
-              checked={selectedCollections.indexOf(slug) > -1}
+            <input type="checkbox" value="{name}"
+              checked={selectedCollections.indexOf(name) > -1}
               onchange={onSelectCollection}>
             {title}
           </label>
@@ -146,7 +146,7 @@
         this.selectedCollections = sel ? sel.split('+') : []
       }
       else {
-        this.selectedCollections = resp.map(function(c) { return c.slug })
+        this.selectedCollections = resp.map(function(c) { return c.name })
       }
 
       this.termsArg = args.terms ? ("" + args.terms).replace(/\+/g, ' ') : ""
