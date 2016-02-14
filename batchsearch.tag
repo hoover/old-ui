@@ -8,7 +8,7 @@
         <h1>Hoover</h1>
       </div>
 
-      <div class="col-sm-9">
+      <div class="col-sm-8">
 
         <div class="form-group">
           <textarea
@@ -38,6 +38,10 @@
 
         </div>
 
+      </div>
+
+      <div class="col-sm-1">
+        <navbar></navbar>
       </div>
 
     </div>

@@ -38,6 +38,7 @@
       </div>
 
       <div class="col-sm-1">
+        <navbar></navbar>
       </div>
 
     </div>
