@@ -22,6 +22,7 @@
         query_string: {
           default_field: 'text',
           query: q,
+          default_operator: 'AND',
         },
       }
     }
