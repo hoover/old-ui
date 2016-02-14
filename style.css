@@ -3,6 +3,10 @@
   list-style: none;
 }
 
+.results-item {
+  margin-bottom: 10px;
+}
+
 .results-item > a {
   color: inherit;
   text-decoration: none;
@@ -15,14 +19,14 @@
 }
 
 .results-item h3 {
-  font-size: inherit;
+  font-size: 16px;
   margin: 0;
   color: #0275d8;
-  display: inline;
 }
 
 .results-highlight, .results-highlight > li {
   display: inline;
+  color: #555;
 }
 
 .results-highlight em {

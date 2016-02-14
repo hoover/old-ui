@@ -64,19 +64,7 @@
       </div>
 
       <div class="col-sm-9">
-
-        <search
-          query={query}
-          onselect={onselect.bind(this)}
-          ></search>
-
-        <div if={selected}>
-          <p if={!preview}>loading ...</p>
-          <div if={preview}>
-            <preview doc={preview}></preview>
-          </div>
-        </div>
-
+        <search query={query}></search>
       </div>
 
     </div>
@@ -128,27 +116,6 @@
     }
 
 
-    function preview(id, q, callback) {
-      $.ajax({
-        url: '/search',
-        method: 'POST',
-        data: JSON.stringify({
-          query: {ids: {values: [id]}},
-          fields: ['title', 'url', 'collection'],
-          highlight: {fields: {text: {
-            number_of_fragments: 0,
-            highlight_query: {
-              query_string: {
-                default_field: 'text',
-                query: q,
-              },
-            }
-          }}},
-        }),
-        success: callback,
-      })
-    }
-
     onSelectCollection(evt) {
       saveCollections()
     }
@@ -183,25 +150,6 @@
       saveCollections()
 
     }.bind(this))
-
-    onselect(id) {
-
-      this.selected = id
-      this.preview = null
-      this.update()
-
-      preview(id, this.q, function(resp) {
-        var hit = resp.hits.hits[0]
-        this.preview = {
-          text: hit.highlight.text[0],
-          title: ""+hit.fields.title,
-          url: ""+hit.fields.url,
-          collection: ""+hit.fields.collection,
-        }
-        this.update()
-      }.bind(this))
-
-    }
 
   </script>
 </searchpage>

@@ -6,7 +6,6 @@
     total={results.total}
     page={results.page}
     page_count={results.page_count}
-    onselect={opts.onselect}
     prev_url={results.prev_url}
     next_url={results.next_url}
     ></results>
@@ -37,7 +36,7 @@
           query: buildQuery(query.q),
           collections: query.collections,
           fields: ['title', 'url'],
-          highlight: {fields: {text: {fragment_size: 40, number_of_fragments: 3}}},
+          highlight: {fields: {text: {fragment_size: 150, number_of_fragments: 3}}},
         }),
         success: success,
         error: error,

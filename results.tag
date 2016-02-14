@@ -9,7 +9,7 @@
 
   <ul id="results" if={opts.hits.length > 0}>
     <li each={opts.hits} class="results-item">
-      <a href="#" onclick={select}>
+      <a href={fields.url[0]} target="_blank">
 
         <h3>{fields.title}</h3>
 
@@ -26,13 +26,5 @@
   <p if={opts.hits.length == 0}>
     -- no results --
   </p>
-
-  <script>
-
-    select(evt) {
-      opts.onselect(evt.item._id)
-    }
-
-  </script>
 
 </results>
