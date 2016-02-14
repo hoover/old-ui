@@ -1,10 +1,14 @@
 <batchsearch>
 
-  <div class="container">
+  <form>
 
-    <form class="row">
+    <div class="row">
 
-      <div class="form col-sm-6">
+      <div class="col-sm-3">
+        <h1>Hoover</h1>
+      </div>
+
+      <div class="col-sm-9">
 
         <div class="form-group">
           <textarea
@@ -14,13 +18,33 @@
             >{termsArg}</textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary">search</button>
+        <div class="form-inline">
+
+          <div class="form-group">
+            <label for="search-size">Results per term</label>
+            <select class="form-control" id="search-size" name="size">
+              <option
+                each={size in sizeOptions}
+                selected={size==this.parent.size}
+                >{size}</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-sm">search</button>
+
+          <p class="pull-sm-right">
+            <a href="/">simple search</a>
+          </p>
+
+        </div>
 
       </div>
 
-      <div id="collections-box" class="col-sm-6">
+    </div>
 
-        <h2>Collections</h2>
+    <div class="row">
+
+      <div id="collections-box" class="col-sm-3">
 
         <p if={!collections}>loading collections ...</p>
 
@@ -39,32 +63,19 @@
 
       </div>
 
-    </form>
-
-    <div class="row">
-
-      <div class="col-sm-4">
+      <div class="col-sm-9">
         <div each={query in queries}>
-          <h3>{query.q}</h3>
-          <search
-            query={query}
-            onselect={selectCallback(query)}
-            ></search>
-        </div>
-      </div>
 
-      <div class="col-sm-8">
-        <div if={selected}>
-          <p if={!preview}>loading ...</p>
-          <div if={preview}>
-            <preview doc={preview}></preview>
-          </div>
+          <h3>{query.q}</h3>
+
+          <search query={query}></search>
+
         </div>
       </div>
 
     </div>
 
-  </div>
+  </form>
 
   <script>
 
@@ -111,32 +122,14 @@
     }
 
 
-    function preview(id, q, callback) {
-      $.ajax({
-        url: '/search',
-        method: 'POST',
-        data: JSON.stringify({
-          query: {ids: {values: [id]}},
-          fields: ['title', 'url', 'collection'],
-          highlight: {fields: {text: {
-            number_of_fragments: 0,
-            highlight_query: {
-              query_string: {
-                default_field: 'text',
-                query: q,
-              },
-            }
-          }}},
-        }),
-        success: callback,
-      })
-    }
-
     onSelectCollection(evt) {
       saveCollections()
     }
 
     var args = parseQuery(window.location.href)
+
+    this.sizeOptions = [5, 10, 20]
+    this.size = args.size ? +args.size : 5
 
     getCollections(function(resp) {
 
@@ -159,7 +152,7 @@
               q: line.trim(),
               collections: this.selectedCollections,
               page: 1,
-              size: 5,
+              size: this.size,
             }
           }.bind(this))
       }
@@ -168,31 +161,6 @@
       saveCollections()
 
     }.bind(this))
-
-    onselect(id, query) {
-
-      this.selected = id
-      this.preview = null
-      this.update()
-
-      preview(id, query.q, function(resp) {
-        var hit = resp.hits.hits[0]
-        this.preview = {
-          text: hit.highlight.text[0],
-          title: ""+hit.fields.title,
-          url: ""+hit.fields.url,
-          collection: ""+hit.fields.collection,
-        }
-        this.update()
-      }.bind(this))
-
-    }
-
-    selectCallback(query) {
-      return function(id) {
-        this.onselect(id, query)
-      }.bind(this)
-    }
 
   </script>
 </batchsearch>
