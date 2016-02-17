@@ -47,3 +47,7 @@
   font-weight: bold;
   background: #ddd;
 }
+
+.count_by_index > :last-child .comma {
+  display: none;
+}

@@ -3,6 +3,10 @@
   <p if={opts.hits.length > 0}>
     <a class="btn btn-secondary-outline btn-sm" if={opts.prev_url} href={opts.prev_url}>&laquo;</a>
     {opts.total} hits
+    <span class="count_by_index" if={opts.collections}>
+      (<span each={col, n in opts.counts}><b>{parent.collectionTitle(col)}</b>
+        {n}<span class="comma">, </span></span>)
+    </span>
     (page {opts.page}/{opts.page_count})
     <a class="btn btn-secondary-outline btn-sm" if={opts.next_url} href={opts.next_url}>&raquo;</a>
   </p>
@@ -28,6 +32,14 @@
   </p>
 
   <script>
+
+    collectionTitle(name) {
+      var col = opts.collections.find(function(c) {
+        return c.name == name
+      })
+      if(col) return col.title
+      return name
+    }
 
     function pdfViewer(url) {
       return 'http://pdfjs.hoover.grep.ro/web/viewer.html?file=' +

@@ -4,10 +4,12 @@
     if={results}
     hits={results.hits}
     total={results.total}
+    counts={results.counts}
     page={results.page}
     page_count={results.page_count}
     prev_url={results.prev_url}
     next_url={results.next_url}
+    collections={opts.collections}
     ></results>
 
   <p if={searching}>searching ...</p>
@@ -62,6 +64,7 @@
         this.results = {
           hits: resp.hits.hits,
           total: resp.hits.total,
+          counts: resp.count_by_index,
           page: page,
           page_count: page_count,
           prev_url: prev_url,

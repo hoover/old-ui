@@ -65,7 +65,7 @@
       </div>
 
       <div class="col-sm-9">
-        <search query={query}></search>
+        <search query={query} collections={collections}></search>
       </div>
 
     </div>
