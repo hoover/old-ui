@@ -9,7 +9,7 @@
 
   <ul id="results" if={opts.hits.length > 0}>
     <li each={opts.hits} class="results-item">
-      <a href={fields.url[0]} target="_blank">
+      <a href={parent.viewUrl(this)} target="_blank">
 
         <h3>{fields.title}</h3>
 
@@ -26,5 +26,19 @@
   <p if={opts.hits.length == 0}>
     -- no results --
   </p>
+
+  <script>
+
+    function pdfViewer(url) {
+      return '/pdfjs/web/viewer.html?file=' + encodeURIComponent(url)
+    }
+
+    viewUrl(item) {
+      var url = item.fields.url[0]
+      var mime_type = (item.fields.mime_type || [])[0]
+      if(mime_type == 'application/pdf') return pdfViewer(url)
+    }
+
+  </script>
 
 </results>

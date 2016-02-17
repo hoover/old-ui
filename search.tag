@@ -35,7 +35,7 @@
           size: query.size,
           query: buildQuery(query.q),
           collections: query.collections,
-          fields: ['title', 'url'],
+          fields: ['title', 'url', 'mime_type'],
           highlight: {fields: {text: {fragment_size: 150, number_of_fragments: 3}}},
         }),
         success: success,
