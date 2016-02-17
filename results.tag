@@ -30,7 +30,8 @@
   <script>
 
     function pdfViewer(url) {
-      return '/pdfjs/web/viewer.html?file=' + encodeURIComponent(url)
+      return 'http://pdfjs.hoover.grep.ro/web/viewer.html?file=' +
+        encodeURIComponent(url)
     }
 
     viewUrl(item) {
