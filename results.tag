@@ -50,6 +50,7 @@
       var url = item.fields.url[0]
       var mime_type = (item.fields.mime_type || [])[0]
       if(mime_type == 'application/pdf') return pdfViewer(url)
+      return url
     }
 
   </script>
