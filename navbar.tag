@@ -12,6 +12,9 @@
          href="https://github.com/mgax/hoover"
          >about</a>
       <a class="dropdown-item"
+         href="https://dl.dropboxusercontent.com/u/103063/static/hoover/HooverDocumentaiton.pdf"
+         >documentation</a>
+      <a class="dropdown-item"
          href="/terms.html"
          >terms</a>
       <a if={!me.username} class="dropdown-item"
